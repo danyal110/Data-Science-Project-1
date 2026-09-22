@@ -4,11 +4,11 @@ install:
 
 
 test:
-	python -m pytest -nbval Untitled9.ipynb
+	python -m pytest --nbval Untitled9.ipynb
 
 
 format:
-	black *.py
+	black *.ipynb
 
 lint:
 	jupyter nbconvert --to python Untitled9.ipynb --output-dir /tmp/pylint >/dev/null 2>&1 && \
