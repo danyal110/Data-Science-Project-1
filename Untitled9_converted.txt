@@ -1,0 +1,68 @@
+import pandas as pd
+
+df=pd.read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties-2021.csv")
+df.head()
+
+df["date"]=pd.to_datetime(df["date"])
+df=df.set_index("date")
+df.head()
+
+df.tail()
+
+df.columns
+
+df.info()
+
+df.isnull().sum()
+
+df.shape
+
+dic={}
+x=df.groupby("county")["deaths"].mean()
+for key,values in x.items():
+  # print(key,values)
+  dic[key]=values
+x
+
+
+df["deaths"] = df["deaths"].fillna(
+    df.groupby("county")["deaths"].transform("mean")
+)
+
+df.isnull().sum()
+
+df["deaths"] = df["deaths"].fillna(df["deaths"].mean())
+
+df.isnull().sum()
+
+import seaborn as sns
+
+sns.scatterplot(data=df, x="cases", y="deaths")
+
+from datetime import  date, timedelta
+today=date.today()
+
+daybefore=today-timedelta(days=2)
+print(today)
+print(daybefore)
+
+df.columns
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+for state in df["state"].unique():
+    state_data = df[df["state"] == state]
+
+    sns.lmplot(
+        data=state_data,
+        x="cases",
+        y="deaths",
+        height=5,
+        aspect=1.3
+    )
+
+    plt.title(f"Cases vs Deaths - {state}")
+    plt.show()
+
+
